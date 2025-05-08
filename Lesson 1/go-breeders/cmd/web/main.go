@@ -24,6 +24,7 @@ func main() {
 	app := application{}
 
 	flag.BoolVar(&app.config.useCache, "cache", false, "Use template cache")
+	flag.Parse()
 
 	srv := &http.Server{
 		Addr:              port,
