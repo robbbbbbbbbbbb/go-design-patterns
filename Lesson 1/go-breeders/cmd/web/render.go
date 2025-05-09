@@ -13,7 +13,6 @@ type templateData struct {
 
 func (app *application) render(w http.ResponseWriter, t string, td *templateData) {
 	var tmpl *template.Template
-	fmt.Println(tmpl)
 	// use cache?
 	if app.config.useCache {
 		if fd, ok := app.templateMap[t]; ok {
@@ -43,10 +42,11 @@ func (app *application) render(w http.ResponseWriter, t string, td *templateData
 
 func (app *application) buildTemplateFromDisk(t string) (*template.Template, error) {
 	tmplSlice := []string{
-		"./templates/base.layout.gohtml",
-		"./templates/partials/header.layout.gohtml",
-		"./templates/partials/footer.layout.gohtml",
-		fmt.Sprint("./templates/%s", t),
+		"../../templates/base.layout.gohtml",
+		"../../templates/partials/navbar.layout.gohtml",
+		"../../templates/partials/header.layout.gohtml",
+		"../../templates/partials/footer.layout.gohtml",
+		fmt.Sprintf("../../templates/%s", t),
 	}
 
 	tmpl, err := template.ParseFiles(tmplSlice...)
