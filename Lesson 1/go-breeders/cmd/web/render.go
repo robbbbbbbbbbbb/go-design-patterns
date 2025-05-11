@@ -17,6 +17,7 @@ func (app *application) render(w http.ResponseWriter, t string, td *templateData
 	if app.config.useCache {
 		if fd, ok := app.templateMap[t]; ok {
 			tmpl = fd
+			log.Println("template cache has been used")
 		}
 	}
 	if tmpl == nil {
