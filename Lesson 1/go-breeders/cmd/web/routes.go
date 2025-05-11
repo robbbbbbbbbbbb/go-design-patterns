@@ -17,6 +17,9 @@ func (app *application) routes() http.Handler {
 	mux.Handle("/static/*", http.StripPrefix("/static/", fileServer))
 
 	mux.Get("/", app.Home)
+	mux.Get("/health", app.Health)
 	mux.Get("/{page}", app.ShowPage)
+	mux.Get("/new-dog", app.NewDogFromFactory)
+	mux.Get("/new-cat", app.NewCatFromFactory)
 	return mux
 }
