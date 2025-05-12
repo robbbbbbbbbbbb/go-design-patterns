@@ -18,8 +18,16 @@ func (app *application) routes() http.Handler {
 
 	mux.Get("/", app.Home)
 	mux.Get("/health", app.Health)
+	mux.Get("/test-patterns", app.TestPatterns)
+
+	mux.Group(func(gr chi.Router) {
+		gr.Route("/api", func(r chi.Router) {
+			r.Get("/dog-from-factory", app.NewDogFromFactory)
+			r.Get("/cat-from-factory", app.NewCatFromFactory)
+		})
+	})
+
 	mux.Get("/{page}", app.ShowPage)
-	mux.Get("/new-dog", app.NewDogFromFactory)
-	mux.Get("/new-cat", app.NewCatFromFactory)
+
 	return mux
 }

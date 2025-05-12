@@ -18,14 +18,15 @@ func (app *application) Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) ShowPage(w http.ResponseWriter, r *http.Request) {
-	factoryRoutes := map[string]int{
-		"new-dog": 1,
-		"new-cat": 1,
-	}
 	page := chi.URLParam(r, "page")
-	if _, ok := factoryRoutes[page]; !ok {
-		app.render(w, page+".page.gohtml", nil)
+	err := app.render(w, page+".page.gohtml", nil)
+	if err != nil {
+		app.render(w, "error.page.gohtml", nil)
 	}
+}
+
+func (app *application) TestPatterns(w http.ResponseWriter, r *http.Request) {
+	app.render(w, "test.page.gohtml", nil)
 }
 
 func (app *application) NewDogFromFactory(w http.ResponseWriter, r *http.Request) {
@@ -33,20 +34,6 @@ func (app *application) NewDogFromFactory(w http.ResponseWriter, r *http.Request
 	np := pets.New("Dog")
 
 	tools.WriteJSON(w, http.StatusOK, np)
-
-	// jsonData, err := json.Marshal(np)
-	// if err != nil {
-	// 	http.Error(w, "cannot marshal data", http.StatusInternalServerError)
-	// 	return
-	// }
-
-	// w.Header().Set("Content-Type", "application/json")
-	// w.WriteHeader(http.StatusOK)
-	// _, err = w.Write(jsonData)
-	// if err != nil {
-	// 	http.Error(w, "cannot write data", http.StatusInternalServerError)
-	// 	return
-	// }
 }
 
 func (app *application) NewCatFromFactory(w http.ResponseWriter, r *http.Request) {
@@ -54,18 +41,4 @@ func (app *application) NewCatFromFactory(w http.ResponseWriter, r *http.Request
 	np := pets.New("Cat")
 
 	tools.WriteJSON(w, http.StatusOK, np)
-
-	// jsonData, err := json.Marshal(np)
-	// if err != nil {
-	// 	http.Error(w, "cannot marshal data", http.StatusInternalServerError)
-	// 	return
-	// }
-
-	// w.Header().Set("Content-Type", "application/json")
-	// w.WriteHeader(http.StatusOK)
-	// _, err = w.Write(jsonData)
-	// if err != nil {
-	// 	http.Error(w, "cannot write data", http.StatusInternalServerError)
-	// 	return
-	// }
 }

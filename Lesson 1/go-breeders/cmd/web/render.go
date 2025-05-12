@@ -11,7 +11,7 @@ type templateData struct {
 	Data map[string]any
 }
 
-func (app *application) render(w http.ResponseWriter, t string, td *templateData) {
+func (app *application) render(w http.ResponseWriter, t string, td *templateData) error {
 	var tmpl *template.Template
 	// use cache?
 	if app.config.useCache {
@@ -24,7 +24,7 @@ func (app *application) render(w http.ResponseWriter, t string, td *templateData
 		newTmpl, err := app.buildTemplateFromDisk(t)
 		if err != nil {
 			log.Println("error building template from disk:", err)
-			return
+			return err
 		}
 		log.Println("building template from disk")
 		tmpl = newTmpl
@@ -39,6 +39,7 @@ func (app *application) render(w http.ResponseWriter, t string, td *templateData
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
+	return nil
 }
 
 func (app *application) buildTemplateFromDisk(t string) (*template.Template, error) {
