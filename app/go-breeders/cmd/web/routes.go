@@ -13,7 +13,7 @@ func (app *application) routes() http.Handler {
 	mux.Use(middleware.Recoverer)
 	mux.Use(middleware.Timeout(60 * time.Second))
 
-	fileServer := http.FileServer(http.Dir("../../static/"))
+	fileServer := http.FileServer(http.Dir("./static/"))
 	mux.Handle("/static/*", http.StripPrefix("/static/", fileServer))
 
 	mux.Get("/", app.Home)
@@ -24,6 +24,9 @@ func (app *application) routes() http.Handler {
 		gr.Route("/api", func(r chi.Router) {
 			r.Get("/dog-from-factory", app.NewDogFromFactory)
 			r.Get("/cat-from-factory", app.NewCatFromFactory)
+
+			r.Get("/dog-from-abstract-factory", app.NewDogFromAbstractFactory)
+			r.Get("/cat-from-abstract-factory", app.NewCatFromAbstractFactory)
 		})
 	})
 

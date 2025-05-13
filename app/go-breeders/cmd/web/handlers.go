@@ -42,3 +42,23 @@ func (app *application) NewCatFromFactory(w http.ResponseWriter, r *http.Request
 
 	tools.WriteJSON(w, http.StatusOK, np)
 }
+
+func (app *application) NewDogFromAbstractFactory(w http.ResponseWriter, r *http.Request) {
+	var tools toolbox.Tools
+	dog, err := pets.NewPetFromAbstractFactory("dog")
+	if err != nil {
+		tools.ErrorJSON(w, err, http.StatusInternalServerError)
+		return
+	}
+	tools.WriteJSON(w, http.StatusOK, dog)
+}
+
+func (app *application) NewCatFromAbstractFactory(w http.ResponseWriter, r *http.Request) {
+	var tools toolbox.Tools
+	cat, err := pets.NewPetFromAbstractFactory("cat")
+	if err != nil {
+		tools.ErrorJSON(w, err, http.StatusInternalServerError)
+		return
+	}
+	tools.WriteJSON(w, http.StatusOK, cat)
+}
