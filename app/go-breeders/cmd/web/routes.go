@@ -27,6 +27,8 @@ func (app *application) routes() http.Handler {
 
 			r.Get("/dog-from-abstract-factory", app.NewDogFromAbstractFactory)
 			r.Get("/cat-from-abstract-factory", app.NewCatFromAbstractFactory)
+
+			r.Get("/dog-breeds", app.GetAllDogBreedsJSON)
 		})
 	})
 
